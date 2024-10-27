@@ -66,4 +66,8 @@ type SyncState struct {
 	FastTime                 uint64 `json:"fast_time"`
 	LowTime                  uint64 `json:"low_time"`
 	NormalTime               uint64 `json:"normal_time"`
+	TipHash                  Hash   `json:"tip_hash"`
+	TipNumber                uint64 `json:"tip_number"`
+	UnverifiedTipHash        Hash   `json:"unverified_tip_hash"`
+	UnverifiedTipNumber      uint64 `json:"unverified_tip_number"`
 }

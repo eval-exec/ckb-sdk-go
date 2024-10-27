@@ -30,7 +30,7 @@ type SimpleTransactionBuilder struct {
 //
 // To create an empty builder without script handlers, just uses '&SimpleTransactionBuilder{}'.
 func NewSimpleTransactionBuilder(network types.Network) *SimpleTransactionBuilder {
-	if network == types.NetworkMain || network == types.NetworkTest {
+	if network == types.NetworkMain || network == types.NetworkTest || network == types.NetworkPreview {
 		s := SimpleTransactionBuilder{}
 		s.Register(handler.NewSecp256k1Blake160SighashAllScriptHandler(network))
 		s.Register(handler.NewSecp256k1Blake160MultisigAllScriptHandler(network))

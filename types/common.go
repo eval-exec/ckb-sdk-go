@@ -17,6 +17,7 @@ const (
 
 	NetworkMain Network = iota
 	NetworkTest
+	NetworkPreview
 
 	WitnessTypeLock WitnessType = iota
 	WitnessTypeInputType

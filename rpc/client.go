@@ -152,6 +152,9 @@ type Client interface {
 	// SendTransaction send new transaction into transaction pool.
 	SendTransaction(ctx context.Context, tx *types.Transaction) (*types.Hash, error)
 
+	// SendTestTransaction send new transaction into transaction pool.
+	SendTestTransaction(ctx context.Context, tx *types.Transaction) (*types.Hash, error)
+
 	/// Test if a transaction can be accepted by the transaction pool without inserting it into the pool or rebroadcasting it to peers.
 	/// The parameters and errors of this method are the same as `send_transaction`.
 	TestTxPoolAccept(ctx context.Context, tx *types.Transaction) (*types.EntryCompleted, error)
@@ -166,6 +169,9 @@ type Client interface {
 
 	// ClearTxPool Removes all transactions from the transaction pool.
 	ClearTxPool(ctx context.Context) error
+
+	// Removes all transactions from the verification queue.
+	ClearTxVerifyQueue(ctx context.Context) error
 
 	////// Stats
 	// GetBlockchainInfo return state info of blockchain
@@ -685,6 +691,17 @@ func (cli *client) SendTransaction(ctx context.Context, tx *types.Transaction) (
 	return &result, err
 }
 
+func (cli *client) SendTestTransaction(ctx context.Context, tx *types.Transaction) (*types.Hash, error) {
+	var result types.Hash
+
+	err := cli.c.CallContext(ctx, &result, "send_test_transaction", *tx, "passthrough")
+	if err != nil {
+		return nil, err
+	}
+
+	return &result, err
+}
+
 // TestTxPoolAccept(ctx context.Context, tx *types.Transaction) (*types.EntryCompleted, error)
 func (cli *client) TestTxPoolAccept(ctx context.Context, tx *types.Transaction) (*types.EntryCompleted, error) {
 	var result types.EntryCompleted
@@ -726,6 +743,10 @@ func (cli *client) GetRawTxPool(ctx context.Context) (*types.RawTxPool, error) {
 
 func (cli *client) ClearTxPool(ctx context.Context) error {
 	return cli.c.CallContext(ctx, nil, "clear_tx_pool")
+}
+
+func (cli *client) ClearTxVerifyQueue(ctx context.Context) error {
+	return cli.c.CallContext(ctx, nil, "clear_tx_verify_queue")
 }
 
 func (cli *client) GetBlockchainInfo(ctx context.Context) (*types.BlockchainInfo, error) {
