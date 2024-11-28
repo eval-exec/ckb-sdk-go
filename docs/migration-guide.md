@@ -15,7 +15,7 @@ In the following part, we list the aspects you need to care about most if you ar
 
 ## Address
 
-The new sdk remove struct `ParsedAddress` and `AddressGenerateResult`, and use a unified struct `Address` to represent ckb address. Below code is the example of address operations.
+The new sdk removes struct `ParsedAddress` and `AddressGenerateResult`, and uses a unified struct `Address` to represent ckb address. Below code is an example of address operations.
 
 Decode address
 

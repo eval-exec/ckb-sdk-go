@@ -32,7 +32,7 @@ ckb-sdk-go provides a convenient client to help you easily interact with [CKB](h
 ```go
 ckbClient, err := rpc.Dial("http://127.0.0.1:8114")
 //!!NOTE: 
-// Indexer RPCs are now intergated into CKB, people now should directly use CKB clients, not the legacy indexer client
+// Indexer RPCs are now integrated into CKB, people now should directly use CKB clients, not the legacy indexer client
 // check https://github.com/nervosnetwork/ckb/blob/develop/rpc/README.md#module-indexer for equivalent RPCs
 //indexerClient, err := indexer.Dial("http://127.0.0.1:8114")
 mercuryClient , err := mercury.Dial("http://127.0.0.1:8116")
@@ -152,7 +152,7 @@ For more use cases of Mercury, please refer to [Mercury test cases](./mercury/cl
 Once the `TransactionWithScriptGroups` is prepared, you can follow these steps to sign and send transaction to CKB network.
 
 1. sign transaction with your private key.
-2. send signed transaction to CKB node, and wait it to be confirmed.
+2. send signed transaction to CKB node, and wait for it to be confirmed.
 
 ```go
 // You can get txWithScriptGroups by manual or by mercury
