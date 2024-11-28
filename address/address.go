@@ -213,6 +213,8 @@ func toHrp(network types.Network) (string, error) {
 		return "ckb", nil
 	case types.NetworkTest:
 		return "ckt", nil
+	case types.NetworkPreview:
+		return "ckt", nil
 	default:
 		return "", errors.New("unknown network")
 	}

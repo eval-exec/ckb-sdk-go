@@ -231,9 +231,11 @@ type CellWithStatus struct {
 }
 
 type TxStatus struct {
-	Status    TransactionStatus `json:"status"`
-	BlockHash *Hash             `json:"block_hash"`
-	Reason    *string           `json:"reason"`
+	Status      TransactionStatus `json:"status"`
+	BlockHash   *Hash             `json:"block_hash"`
+	BlockNumber *uint64           `json:"block_number"`
+	TxIndex     *uint             `json:"tx_index"`
+	Reason      *string           `json:"reason"`
 }
 
 type TransactionWithStatus struct {

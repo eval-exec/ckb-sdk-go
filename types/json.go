@@ -413,6 +413,10 @@ type jsonSyncState struct {
 	FastTime                hexutil.Uint64 `json:"fast_time"`
 	LowTime                 hexutil.Uint64 `json:"low_time"`
 	NormalTime              hexutil.Uint64 `json:"normal_time"`
+	TipHash                 Hash           `json:"tip_hash"`
+	TipNumber               hexutil.Uint64 `json:"tip_number"`
+	UnverifiedTipHash       Hash           `json:"unverified_tip_hash"`
+	UnverifiedTipNumber     hexutil.Uint64 `json:"unverified_tip_number"`
 }
 
 func (t *SyncState) UnmarshalJSON(input []byte) error {
@@ -429,6 +433,10 @@ func (t *SyncState) UnmarshalJSON(input []byte) error {
 		FastTime:                uint64(jsonObj.FastTime),
 		LowTime:                 uint64(jsonObj.LowTime),
 		NormalTime:              uint64(jsonObj.NormalTime),
+		TipHash:                 jsonObj.TipHash,
+		TipNumber:               uint64(jsonObj.TipNumber),
+		UnverifiedTipHash:       jsonObj.UnverifiedTipHash,
+		UnverifiedTipNumber:     uint64(jsonObj.UnverifiedTipNumber),
 	}
 	return nil
 }
@@ -754,6 +762,53 @@ func (r *FeeRateStatics) MarshalJSON() ([]byte, error) {
 		Median: hexutil.Uint64(r.Median),
 	}
 	return json.Marshal(jsonObj)
+}
+
+type jsonTxStatus struct {
+	Status      TransactionStatus `json:"status"`
+	BlockHash   *Hash             `json:"block_hash"`
+	BlockNumber *hexutil.Uint64   `json:"block_number"`
+	TxIndex     *hexutil.Uint     `json:"tx_index"`
+	Reason      *string           `json:"reason"`
+}
+
+func (r *TxStatus) MarshalJSON() ([]byte, error) {
+	jsonObj := &jsonTxStatus{
+		Status:    r.Status,
+		BlockHash: r.BlockHash,
+		Reason:    r.Reason,
+	}
+
+	if r.BlockNumber != nil {
+		jsonObj.BlockNumber = (*hexutil.Uint64)(r.BlockNumber)
+	}
+	if r.TxIndex != nil {
+		jsonObj.TxIndex = (*hexutil.Uint)(r.TxIndex)
+	}
+	return json.Marshal(jsonObj)
+}
+
+func (r *TxStatus) UnmarshalJSON(input []byte) error {
+	var result jsonTxStatus
+	if err := json.Unmarshal(input, &result); err != nil {
+		return err
+	}
+
+	*r = TxStatus{
+		Status:    result.Status,
+		BlockHash: result.BlockHash,
+		Reason:    result.Reason,
+	}
+
+	if result.BlockNumber != nil {
+		r.BlockNumber = (*uint64)(result.BlockNumber)
+	}
+
+	if result.TxIndex != nil {
+		r.TxIndex = (*uint)(result.TxIndex)
+	}
+
+	return nil
 }
 
 type jsonTransactionWithStatus struct {

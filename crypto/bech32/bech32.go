@@ -11,7 +11,9 @@ const charset = "qpzry9x8gf2tvdw0s3jn54khce6mua7l"
 var gen = []int{0x3b6a57b2, 0x26508e6d, 0x1ea119fa, 0x3d4233dd, 0x2a1462b3}
 
 const BECH32M_CONST = 0x2bc830a3
+
 type Encoding uint
+
 const (
 	BECH32 Encoding = iota
 	BECH32M
@@ -42,7 +44,7 @@ func Decode(bech string) (Encoding, string, []byte, error) {
 
 	decoded, err := toBytes(data)
 	if err != nil {
-		return  BECH32, "", nil, errors.New(fmt.Sprintf("failed converting data to bytes: %v", err))
+		return BECH32, "", nil, errors.New(fmt.Sprintf("failed converting data to bytes: %v", err))
 	}
 
 	ints := make([]int, len(decoded))

@@ -64,6 +64,28 @@ func NewOmnilockScriptHandler(network types.Network) *OmnilockScriptHandler {
 			},
 			CodeHash: systemscript.GetCodeHash(network, systemscript.Omnilock),
 		}
+	case types.NetworkPreview:
+		return &OmnilockScriptHandler{
+			SingleSignCellDep: &types.CellDep{
+				OutPoint: &types.OutPoint{
+					TxHash: types.HexToHash("0x0fab65924f2784f17ad7f86d6aef4b04ca1ca237102a68961594acebc5c77816"),
+					Index:  0,
+				},
+				DepType: types.DepTypeDepGroup,
+			},
+			MultiSignCellDep: &types.CellDep{
+				OutPoint: &types.OutPoint{
+					TxHash: types.HexToHash("0x0fab65924f2784f17ad7f86d6aef4b04ca1ca237102a68961594acebc5c77816"),
+					Index:  1,
+				},
+				DepType: types.DepTypeDepGroup,
+			},
+			CellDep: &types.CellDep{
+				OutPoint: systemscript.GetInfo(network, systemscript.Omnilock).OutPoint,
+				DepType:  systemscript.GetInfo(network, systemscript.Omnilock).DepType,
+			},
+			CodeHash: systemscript.GetCodeHash(network, systemscript.Omnilock),
+		}
 	default:
 		return nil
 	}

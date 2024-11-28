@@ -19,6 +19,8 @@ func NewSecp256k1Blake160SighashAllScriptHandler(network types.Network) *Secp256
 		txHash = types.HexToHash("0x71a7ba8fc96349fea0ed3a5c47992e3b4084b031a42264a018e0072e8172e46c")
 	} else if network == types.NetworkTest {
 		txHash = types.HexToHash("0xf8de3bb47d055cdf460d93a2a6e1b05f7432f9777c8c474abf4eec1d4aee5d37")
+	} else if network == types.NetworkPreview {
+		txHash = types.HexToHash("0x0fab65924f2784f17ad7f86d6aef4b04ca1ca237102a68961594acebc5c77816")
 	} else {
 		return nil
 	}
@@ -66,6 +68,8 @@ func NewSecp256k1Blake160MultisigAllScriptHandler(network types.Network) *Secp25
 		txHash = types.HexToHash("0x71a7ba8fc96349fea0ed3a5c47992e3b4084b031a42264a018e0072e8172e46c")
 	} else if network == types.NetworkTest {
 		txHash = types.HexToHash("0xf8de3bb47d055cdf460d93a2a6e1b05f7432f9777c8c474abf4eec1d4aee5d37")
+	} else if network == types.NetworkPreview {
+		txHash = types.HexToHash("0x0fab65924f2784f17ad7f86d6aef4b04ca1ca237102a68961594acebc5c77816")
 	} else {
 		return nil
 	}
