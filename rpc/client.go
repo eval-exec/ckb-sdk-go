@@ -127,7 +127,7 @@ type Client interface {
 	// GetBannedAddresses returns all banned IPs/Subnets.
 	GetBannedAddresses(ctx context.Context) ([]*types.BannedAddress, error)
 
-	// ClearBannedAddress returns all banned IPs/Subnets.
+	// ClearBannedAddresses returns all banned IPs/Subnets.
 	ClearBannedAddresses(ctx context.Context) error
 
 	// SetBan insert or delete an IP/Subnet from the banned list
