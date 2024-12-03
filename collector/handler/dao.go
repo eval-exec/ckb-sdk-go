@@ -104,7 +104,7 @@ type ClaimInfo struct {
 }
 
 func NewClaimInfo(client rpc.Client, withdrawOutpoint *types.OutPoint) (*ClaimInfo, error) {
-	txWithStatus, err := client.GetTransaction(context.Background(), withdrawOutpoint.TxHash, nil)
+	txWithStatus, err := client.GetTransaction(context.Background(), withdrawOutpoint.TxHash, nil, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +113,7 @@ func NewClaimInfo(client rpc.Client, withdrawOutpoint *types.OutPoint) (*ClaimIn
 	var depositBlockHash types.Hash
 	for i := 0; i < len(withdrawTx.Inputs); i++ {
 		outPoint := withdrawTx.Inputs[i].PreviousOutput
-		txWithStatus, err := client.GetTransaction(context.Background(), outPoint.TxHash, nil)
+		txWithStatus, err := client.GetTransaction(context.Background(), outPoint.TxHash, nil, nil)
 		if err != nil {
 			return nil, err
 		}
@@ -127,11 +127,11 @@ func NewClaimInfo(client rpc.Client, withdrawOutpoint *types.OutPoint) (*ClaimIn
 	if reflect.DeepEqual(depositBlockHash, types.Hash{}) {
 		return nil, errors.New("can't find deposit cell")
 	}
-	depositBlockHeader, err := client.GetHeader(context.Background(), depositBlockHash)
+	depositBlockHeader, err := client.GetHeader(context.Background(), depositBlockHash, nil)
 	if err != nil {
 		return nil, err
 	}
-	withdrawBlockHeader, err := client.GetHeader(context.Background(), *withdrawBlockHash)
+	withdrawBlockHeader, err := client.GetHeader(context.Background(), *withdrawBlockHash, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -177,12 +177,12 @@ type WithdrawInfo struct {
 }
 
 func NewWithdrawInfo(client rpc.Client, depositOutPoint *types.OutPoint) (*WithdrawInfo, error) {
-	txWithStatus, err := client.GetTransaction(context.Background(), depositOutPoint.TxHash, nil)
+	txWithStatus, err := client.GetTransaction(context.Background(), depositOutPoint.TxHash, nil, nil)
 	if err != nil {
 		return nil, err
 	}
 	depositBlockHash := txWithStatus.TxStatus.BlockHash
-	header, err := client.GetHeader(context.Background(), *depositBlockHash)
+	header, err := client.GetHeader(context.Background(), *depositBlockHash, nil)
 	if err != nil {
 		return nil, err
 	}

@@ -23,7 +23,7 @@ func assertEqualHexBytes(t *testing.T, a string, b []byte) {
 }
 
 func TestClient_GetBlockByNumber(t *testing.T) {
-	block, err := testClient.GetBlockByNumber(ctx, 1)
+	block, err := testClient.GetBlockByNumber(ctx, 1, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -31,7 +31,7 @@ func TestClient_GetBlockByNumber(t *testing.T) {
 }
 
 func TestClient_GetBlockByNumberWithCycles(t *testing.T) {
-	block, err := testClient.GetBlockByNumberWithCycles(ctx, 1)
+	block, err := testClient.GetBlockByNumberWithCycles(ctx, 1, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -99,7 +99,7 @@ func TestClient_GetBlockWithCycles(t *testing.T) {
 
 func TestClient_GetTransaction(t *testing.T) {
 	txView, err := testClient.GetTransaction(ctx,
-		types.HexToHash("0x8277d74d33850581f8d843613ded0c2a1722dec0e87e748f45c115dfb14210f1"), nil)
+		types.HexToHash("0x8277d74d33850581f8d843613ded0c2a1722dec0e87e748f45c115dfb14210f1"), nil, nil)
 	assert.NoError(t, err)
 	tx := txView.Transaction
 	status := txView.TxStatus
@@ -162,7 +162,7 @@ func TestClient_GetEpochByNumber(t *testing.T) {
 
 func TestClient_GetHeader(t *testing.T) {
 	header, err := testClient.GetHeader(ctx,
-		types.HexToHash("0xd5ac7cf8c34a975bf258a34f1c2507638487ab71aa4d10a9ec73704aa3abf9cd"))
+		types.HexToHash("0xd5ac7cf8c34a975bf258a34f1c2507638487ab71aa4d10a9ec73704aa3abf9cd"), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -181,7 +181,7 @@ func TestClient_GetHeaderVerbosity0(t *testing.T) {
 }
 
 func TestClient_GetHeaderByNumber(t *testing.T) {
-	header, err := testClient.GetHeaderByNumber(ctx, 1)
+	header, err := testClient.GetHeaderByNumber(ctx, 1, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -190,7 +190,7 @@ func TestClient_GetHeaderByNumber(t *testing.T) {
 }
 
 func TestClient_GetHeaderByNumberVerbosity0(t *testing.T) {
-	header, err := testClient.GetPackedHeaderByNumber(ctx, 1)
+	header, err := testClient.GetPackedHeaderByNumber(ctx, 1, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -375,7 +375,7 @@ func TestClient_ClearTxPool(t *testing.T) {
 }
 
 func TestClient_GetRawTxPool(t *testing.T) {
-	rawTxPool, err := testClient.GetRawTxPool(ctx)
+	rawTxPool, err := testClient.GetRawTxPool(ctx, nil)
 	if err != nil {
 		t.Fatal(err)
 	}

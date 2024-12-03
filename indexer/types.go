@@ -1,6 +1,8 @@
 package indexer
 
 import (
+	"encoding/json"
+
 	"github.com/nervosnetwork/ckb-sdk-go/v2/types"
 )
 
@@ -24,11 +26,13 @@ type SearchKey struct {
 }
 
 type Filter struct {
-	Script              *types.Script `json:"script"`
-	ScriptLenRange      *[2]uint64    `json:"script_len_range,omitempty"`
-	OutputDataLenRange  *[2]uint64    `json:"output_data_len_range,omitempty"`
-	OutputCapacityRange *[2]uint64    `json:"output_capacity_range,omitempty"`
-	BlockRange          *[2]uint64    `json:"block_range,omitempty"`
+	Script               *types.Script           `json:"script"`
+	ScriptLenRange       *[2]uint64              `json:"script_len_range,omitempty"`
+	OutputData           *json.RawMessage        `json:"output_data,omitempty"`
+	OutputDataFilterMode *types.ScriptSearchMode `json:"output_data_filter_mode,omitempty"`
+	OutputDataLenRange   *[2]uint64              `json:"output_data_len_range,omitempty"`
+	OutputCapacityRange  *[2]uint64              `json:"output_capacity_range,omitempty"`
+	BlockRange           *[2]uint64              `json:"block_range,omitempty"`
 }
 
 type LiveCell struct {

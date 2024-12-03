@@ -1,6 +1,7 @@
 package types
 
 import (
+	"encoding/json"
 	"math/big"
 
 	"github.com/nervosnetwork/ckb-sdk-go/v2/crypto/blake2b"
@@ -179,10 +180,11 @@ type UncleBlock struct {
 }
 
 type Block struct {
-	Header       *Header        `json:"header"`
-	Proposals    []string       `json:"proposals"`
-	Transactions []*Transaction `json:"transactions"`
-	Uncles       []*UncleBlock  `json:"uncles"`
+	Header       *Header          `json:"header"`
+	Proposals    []string         `json:"proposals"`
+	Transactions []*Transaction   `json:"transactions"`
+	Uncles       []*UncleBlock    `json:"uncles"`
+	Extension    *json.RawMessage `json:"extension"`
 }
 
 type PackedBlock struct {

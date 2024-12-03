@@ -1,6 +1,40 @@
 package types
 
 import "math/big"
+import "encoding/json"
+
+//	pub struct Alert {
+//	    /// The identifier of the alert. Clients use id to filter duplicated alerts.
+//	    pub id: AlertId,
+//	    /// Cancel a previous sent alert.
+//	    pub cancel: AlertId,
+//	    /// Optionally set the minimal version of the target clients.
+//	    ///
+//	    /// See [Semantic Version](https://semver.org/) about how to specify a version.
+//	    pub min_version: Option<String>,
+//	    /// Optionally set the maximal version of the target clients.
+//	    ///
+//	    /// See [Semantic Version](https://semver.org/) about how to specify a version.
+//	    pub max_version: Option<String>,
+//	    /// Alerts are sorted by priority, highest first.
+//	    pub priority: AlertPriority,
+//	    /// The alert is expired after this timestamp.
+//	    pub notice_until: Timestamp,
+//	    /// Alert message.
+//	    pub message: String,
+//	    /// The list of required signatures.
+//	    pub signatures: Vec<JsonBytes>,
+//	}
+type Alert struct {
+	Id          uint32            `json:"id"`
+	Cancel      uint32            `json:"cancel"`
+	MinVersion  *string           `json:"min_version"`
+	MaxVersion  *string           `json:"max_version"`
+	Priority    uint32            `json:"priority"`
+	NoticeUntil uint64            `json:"notice_until"`
+	Message     string            `json:"message"`
+	Signatures  []json.RawMessage `json:"signatures"`
+}
 
 type AlertMessage struct {
 	Id          uint32 `json:"id"`

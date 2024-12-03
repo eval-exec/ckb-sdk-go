@@ -47,11 +47,11 @@ func NewDaoTransactionBuilder(network types.Network, iterator collector.CellIter
 	depositCellCapacity := uint64(0)
 	reward := uint64(0)
 	if transactionType == DaoTransactionTypeWithdraw {
-		txWithStatus, err := client.GetTransaction(context.Background(), daoOutPoint.TxHash, nil)
+		txWithStatus, err := client.GetTransaction(context.Background(), daoOutPoint.TxHash, nil, nil)
 		if err != nil {
 			return nil, err
 		}
-		header, err := client.GetHeader(context.Background(), *txWithStatus.TxStatus.BlockHash)
+		header, err := client.GetHeader(context.Background(), *txWithStatus.TxStatus.BlockHash, nil)
 		if err != nil {
 			return nil, err
 		}
@@ -94,7 +94,7 @@ func getTransactionType(outputData []byte) (DaoTransactionType, error) {
 }
 
 func getDaoReward(withdrawOutPoint *types.OutPoint, client rpc.Client) (uint64, error) {
-	txWithStatus, err := client.GetTransaction(context.Background(), withdrawOutPoint.TxHash, nil)
+	txWithStatus, err := client.GetTransaction(context.Background(), withdrawOutPoint.TxHash, nil, nil)
 	if err != nil {
 		return 0, err
 	}
@@ -107,7 +107,7 @@ func getDaoReward(withdrawOutPoint *types.OutPoint, client rpc.Client) (uint64, 
 	)
 	for i := 0; i < len(withdrawTx.Inputs); i++ {
 		outPoint := withdrawTx.Inputs[i].PreviousOutput
-		txWithStatus, err := client.GetTransaction(context.Background(), outPoint.TxHash, nil)
+		txWithStatus, err := client.GetTransaction(context.Background(), outPoint.TxHash, nil, nil)
 		if err != nil {
 			return 0, err
 		}
@@ -124,11 +124,11 @@ func getDaoReward(withdrawOutPoint *types.OutPoint, client rpc.Client) (uint64, 
 	if depositCell == nil {
 		return 0, errors.New("can't find deposit cell")
 	}
-	depositBlockHeader, err := client.GetHeader(context.Background(), depositBlockHash)
+	depositBlockHeader, err := client.GetHeader(context.Background(), depositBlockHash, nil)
 	if err != nil {
 		return 0, err
 	}
-	withdrawBlockHeader, err := client.GetHeader(context.Background(), *withdrawBlockHash)
+	withdrawBlockHeader, err := client.GetHeader(context.Background(), *withdrawBlockHash, nil)
 	if err != nil {
 		return 0, err
 	}
