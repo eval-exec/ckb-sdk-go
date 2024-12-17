@@ -1,5 +1,64 @@
 package types
 
+import "encoding/json"
+
+// /// The uncle block template of the new block for miners.
+// #[derive(Clone, Default, Serialize, Deserialize, PartialEq, Eq, Hash, Debug, JsonSchema)]
+// pub struct UncleTemplate {
+//     /// The uncle block hash.
+//     pub hash: H256,
+//     /// Whether miners must include this uncle in the submit block.
+//     pub required: bool,
+//     /// The proposals of the uncle block.
+//     ///
+//     /// Miners must keep this unchanged when including this uncle in the new block.
+//     pub proposals: Vec<ProposalShortId>,
+//     /// The header of the uncle block.
+//     ///
+//     /// Miners must keep this unchanged when including this uncle in the new block.
+//     pub header: Header,
+// }
+
+type UncleTemplate struct {
+	Hash      Hash     `json:"hash"`
+	Required  bool     `json:"required"`
+	Proposals []string `json:"proposals"`
+	Header    *Header  `json:"header"`
+}
+
+type BlockTemplate struct {
+	Version          uint32                `json:"version"`
+	CompactTarget    uint32                `json:"compact_target"`
+	CurrentTime      uint64                `json:"current_time"`
+	Number           uint64                `json:"number"`
+	Epoch            uint64                `json:"epoch"`
+	ParentHash       Hash                  `json:"parent_hash"`
+	CyclesLimit      uint64                `json:"cycles_limit"`
+	BytesLimit       uint64                `json:"bytes_limit"`
+	UnclesCountLimit uint64                `json:"uncles_count_limit"`
+	Uncles           []UncleTemplate       `json:"uncles"`
+	Transactions     []TransactionTemplate `json:"transactions"`
+	Proposals        []string              `json:"proposals"`
+	Cellbase         CellbaseTemplate      `json:"cellbase"`
+	WorkId           uint64                `json:"work_id"`
+	Dao              Hash                  `json:"dao"`
+	Extension        *json.RawMessage      `json:"extension"`
+}
+
+type CellbaseTemplate struct {
+	Hash   Hash        `json:"hash"`
+	Cycles *uint64     `json:"cycles"`
+	Data   Transaction `json:"data"`
+}
+
+type TransactionTemplate struct {
+	Hash     Hash        `json:"hash"`
+	Required bool        `json:"required"`
+	Cycles   *uint64     `json:"cycles"`
+	Depends  *[]uint64   `json:"depends"`
+	Data     Transaction `json:"data"`
+}
+
 type TxPoolInfo struct {
 	LastTxsUpdatedAt uint64 `json:"last_txs_updated_at"`
 	MaxTxPoolSize    uint64 `json:"max_tx_pool_size"`

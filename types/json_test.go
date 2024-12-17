@@ -473,7 +473,8 @@ func TestJsonBlock(t *testing.T) {
             ]
         }
     ],
-    "uncles": []
+    "uncles": [],
+    "extension": []
 }`)
 	var v Block
 	json.Unmarshal(jsonText1, &v)

@@ -24,7 +24,7 @@ type DaoDepositCellInfo struct {
 
 // GetDaoDepositCellInfo Get information for DAO cell deposited as outpoint and withdrawn in block of withdrawBlockHash
 func (c *DaoHelper) GetDaoDepositCellInfo(outpoint *types.OutPoint, withdrawBlockHash types.Hash) (DaoDepositCellInfo, error) {
-	blockHeader, err := c.Client.GetHeader(context.Background(), withdrawBlockHash)
+	blockHeader, err := c.Client.GetHeader(context.Background(), withdrawBlockHash, nil)
 	if err != nil {
 		return DaoDepositCellInfo{}, err
 	}
@@ -33,7 +33,7 @@ func (c *DaoHelper) GetDaoDepositCellInfo(outpoint *types.OutPoint, withdrawBloc
 
 // GetDaoDepositCellInfoWithWithdrawOutpoint Get information for DAO cell deposited as outpoint and withdrawn in block where the withdrawCellOutPoint is
 func (c *DaoHelper) GetDaoDepositCellInfoWithWithdrawOutpoint(outpoint *types.OutPoint, withdrawCellOutPoint *types.OutPoint) (DaoDepositCellInfo, error) {
-	withdrawTransaction, err := c.Client.GetTransaction(context.Background(), withdrawCellOutPoint.TxHash, nil)
+	withdrawTransaction, err := c.Client.GetTransaction(context.Background(), withdrawCellOutPoint.TxHash, nil, nil)
 	if err != nil {
 		return DaoDepositCellInfo{}, err
 	}
@@ -51,11 +51,11 @@ func (c *DaoHelper) GetDaoDepositCellInfoByNow(outpoint *types.OutPoint) (DaoDep
 
 // getDaoDepositCellInfo Get information for DAO cell deposited as outpoint and withdrawn in withdrawBlock
 func (c *DaoHelper) getDaoDepositCellInfo(outpoint *types.OutPoint, withdrawBlockHeader *types.Header) (DaoDepositCellInfo, error) {
-	depositTransactionWithStatus, err := c.Client.GetTransaction(context.Background(), outpoint.TxHash, nil)
+	depositTransactionWithStatus, err := c.Client.GetTransaction(context.Background(), outpoint.TxHash, nil, nil)
 	if err != nil {
 		return DaoDepositCellInfo{}, err
 	}
-	depositBlockHeader, err := c.Client.GetHeader(context.Background(), *depositTransactionWithStatus.TxStatus.BlockHash)
+	depositBlockHeader, err := c.Client.GetHeader(context.Background(), *depositTransactionWithStatus.TxStatus.BlockHash, nil)
 	if err != nil {
 		return DaoDepositCellInfo{}, err
 	}

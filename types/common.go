@@ -26,8 +26,9 @@ const (
 	ScriptTypeLock ScriptType = "lock"
 	ScriptTypeType ScriptType = "type"
 
-	ScriptSearchModePrefix ScriptSearchMode = "prefix"
-	ScriptSearchModeExact  ScriptSearchMode = "exact"
+	ScriptSearchModePrefix  ScriptSearchMode = "prefix"
+	ScriptSearchModeExact   ScriptSearchMode = "exact"
+	ScriptSearchModePartial ScriptSearchMode = "partial"
 )
 
 var (
